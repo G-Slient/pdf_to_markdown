@@ -1,5 +1,12 @@
 """
-Based on an implementation by Sunil Kumar Dash:
+This code uses the PyMuPDF package.
+
+PyMuPDF is AGPL licensed, please refer to:
+https://pymupdf.readthedocs.io/en/latest/about.html#license-and-copyright
+"""
+
+"""
+Code below is based on an implementation by Sunil Kumar Dash:
 
 MIT License
 
@@ -34,7 +41,7 @@ from langchain_openai import ChatOpenAI
 
 from langchain_community.document_loaders import PyMuPDFLoader
 
-import fitz
+import pymupdf
 from PIL import Image
 import os
 import re
@@ -121,7 +128,7 @@ def get_response(history, query, file):
 
 
 def render_file(file):
-    doc = fitz.open(file.name)
+    doc = pymupdf.open(file.name)
     page = doc[app.N]
     # Render the page as a PNG image with a resolution of 150 DPI
     pix = page.get_pixmap(dpi=150)
@@ -136,7 +143,7 @@ def purge_chat_and_render_first(file):
     app.count = 0
 
     # Use PyMuPDF to render the first page of the uploaded document
-    doc = fitz.open(file.name)
+    doc = pymupdf.open(file.name)
     page = doc[0]
     # Render the page as a PNG image with a resolution of 150 DPI
     pix = page.get_pixmap(dpi=150)
