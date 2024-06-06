@@ -417,20 +417,23 @@ def to_markdown(
         """Process one page."""
         page = doc[pno]
         
-        # compute header and footer coordinates to exclude the content from these areas
-        header_coordinates, footer_coordinates = compute_header_footer_coordinates(page)
+        # # compute header and footer coordinates to exclude the content from these areas
+        # header_coordinates, footer_coordinates = compute_header_footer_coordinates(page)
         
-        # Add the redaction rectangle to the page
-        page.add_redact_annot(header_coordinates)
-        page.apply_redactions()
+        # # Add the redaction rectangle to the page
+        # page.add_redact_annot(header_coordinates)
+        # page.apply_redactions()
         
-        page.add_redact_annot(footer_coordinates)
-        page.apply_redactions()
+        # page.add_redact_annot(footer_coordinates)
+        # page.apply_redactions()
             
         md_string = ""
 
-        # extract all links on page
-        links = [l for l in page.get_links() if l["kind"] == 2]
+        try:
+            # extract all links on page
+            links = [l for l in page.get_links() if l["kind"] == 2]
+        except Exception:
+            links = []
 
         # make a TextPage for all later extractions
         textpage = page.get_textpage(flags=textflags)
